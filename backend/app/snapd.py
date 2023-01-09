@@ -14,6 +14,14 @@ class SnapdClient():
         response = self.session.get("http://snapd/v2/system-info")
         return response.json()
 
+    def snap_system_users(self):
+        response = self.session.get("http://snapd/v2/users")
+        return response.json()
+    
+    def snap_system_info(self):
+        response = self.session.get("http://snapd/v2/system-info")
+        return response.json()
+
     def snap_list_info(self):
         response = self.session.get("http://snapd/v2/snaps")
         return response.json()
