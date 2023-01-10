@@ -1,4 +1,4 @@
-# snapd-management-snap
+# snapd-iot-device-agent
 
 This is a sample REST API that works as a proxy by communicating with snapd's rest api
 provided via a unix socket.
@@ -7,7 +7,7 @@ provided via a unix socket.
 
     ```
     $ snapcraft --use-lxd
-    $ sudo snap install snapd-management-snap_0.1_amd64.snap --dangerous --devmode
+    $ sudo snap install snapd-iot-device-agent_0.1_amd64.snap --dangerous --devmode
     ```
 
 ## Connect Interface
@@ -15,7 +15,7 @@ provided via a unix socket.
 It is not mandatory since you install the snap with `--devmode` but you could connect the interfaces the following command;
 
     ```
-    $ sudo snap connect snapd-management-snap:snapd-control :snapd-control
+    $ sudo snap connect snapd-iot-device-agent:snapd-control :snapd-control
     ```
 
 ## Run

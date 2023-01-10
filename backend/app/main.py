@@ -150,27 +150,37 @@ class MqttCommunication(object):
             result = subprocess.run(["uptime", "-p"], stdout=subprocess.PIPE)
             output = result.stdout.decode().strip()
             self.HeartBeatMessagePayload.update({'id':str(self.MQTT_CLIENT_ID),'data': output})
-            print(self.HeartBeatMessagePayload)
+            #print(self.HeartBeatMessagePayload)
             self.client.publish(self.MQTT_PUBLISH_TOPIC_BASE + self.MQTT_CLIENT_ID,json.dumps(self.HeartBeatMessagePayload))
 
+        if "reboot" in str(msg.payload):
+            print("reboot received")
+            self.retMessagePayload.update({'msgCode':"reboot-ret",'id':str(self.MQTT_CLIENT_ID),'data': "reboot-OK"})
+            #print(self.retMessagePayload)
+            self.client.publish(self.MQTT_PUBLISH_TOPIC_BASE + self.MQTT_CLIENT_ID,json.dumps(self.retMessagePayload))
+            self.snap_client.reboot()
+
         if "getuserinfo" in str(msg.payload):
+            print("getuserinfo received")
             data_out= json.dumps(self.snap_client.snap_system_users())
             #print(data_out)
             self.retMessagePayload.update({'msgCode':"getuserinfo-ret",'id':str(self.MQTT_CLIENT_ID),'data': data_out})
-            print(self.retMessagePayload)
+            #print(self.retMessagePayload)
             self.client.publish(self.MQTT_PUBLISH_TOPIC_BASE + self.MQTT_CLIENT_ID,json.dumps(self.retMessagePayload))
 
         if "getsysteminfo" in str(msg.payload):
+            print("getsysteminfo received")
             data_out= json.dumps(self.snap_client.snap_system_info())
             #print(data_out)
             self.retMessagePayload.update({'msgCode':"getsysteminfo-ret",'id':str(self.MQTT_CLIENT_ID),'data': data_out})
-            print(self.retMessagePayload)
+            #print(self.retMessagePayload)
             self.client.publish(self.MQTT_PUBLISH_TOPIC_BASE + self.MQTT_CLIENT_ID,json.dumps(self.retMessagePayload))
         
-        if "getsnapinfo" in str(msg.payload):          
+        if "getsnapinfo" in str(msg.payload): 
+            print("getsnapinfo received")         
             data_out= json.dumps(self.snap_client.snap_list_info())
             self.retMessagePayload.update({'msgCode':"getsnapinfo-ret",'id':str(self.MQTT_CLIENT_ID),'data': data_out})
-            print(self.retMessagePayload)
+            #print(self.retMessagePayload)
             self.client.publish(self.MQTT_PUBLISH_TOPIC_BASE + self.MQTT_CLIENT_ID,json.dumps(self.retMessagePayload))
         
     def mqtt_on_disconnect(self, client, userdata, rc):

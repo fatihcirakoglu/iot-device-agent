@@ -34,8 +34,8 @@ class SnapdClient():
         response = self.session.post("http://snapd/v2/snaps/"+snap, json={"action": "revert"})
         return response.json()
 
-    def reboot(self, snap):
-        response = self.session.post("http://snapd/v2/systems", json={"action": "reboot","mode": "run"})
+    def reboot(self):
+        response = self.session.post("http://snapd/v2/systems", json={"action": "reboot"})
         return response.json()
     
 
