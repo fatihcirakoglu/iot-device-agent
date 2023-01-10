@@ -1,4 +1,4 @@
-name: snapd-management-snap
+name: snapd-iot-device-agent
 base: core20
 version: '0.1' 
 summary: REST API to communicate with snapd-rest-api

@@ -72,8 +72,8 @@ class MqttCommunication(object):
             self.client.loop_start()
             
             while True:
-                self.client.loop(1000000)
-            #    self.client.publish(self.MQTT_PUBLISH_TOPIC_BASE + self.MQTT_CLIENT_ID,json.dumps(self.HeartBeatMessagePayload))
+                self.client.loop(10)
+                time.sleep(10)
 
         except Exception as e:
             logging.info ("Error connecting to %s:%d: %s" % (mqtt_host, mqtt_port, str(e)))
@@ -191,8 +191,4 @@ class MqttCommunication(object):
 
 agentIface = MqttCommunication("20231","35.173.244.221",1883,"django/iot/client/","django/iot/server/")
 agentIface.connectHost(agentIface.MQTT_HOST,agentIface.MQTT_PORT,agentIface.MQTT_USERNAME,agentIface.MQTT_PASSWORD,agentIface.MQTT_KEEPALIVE)
-# create and start the daemon thread
-print('Starting background task...')
-daemon = Thread(target=agentIface.loop, daemon=False, name='Monitor')
-daemon.start()
 
